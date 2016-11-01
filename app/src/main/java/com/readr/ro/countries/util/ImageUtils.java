@@ -18,7 +18,7 @@ public class ImageUtils {
      * @param alphaCode            first country code
      * @param alternativeAlphaCode second country code
      * @param context              context
-     * @return
+     * @return resourceId          resourceId
      */
     public static int fetchFlagFromAlphaCode(String alphaCode, String alternativeAlphaCode, Context context) {
 

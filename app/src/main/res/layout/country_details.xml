@@ -1,15 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
+        <TextView
+            android:id="@+id/title"
+            style="@style/HeaderTheme"
+            tools:text="Romania, Bucharest" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/subTitle"
+            style="@style/SubHeaderTheme"
+            android:layout_below="@id/title"
+            tools:text="Europe, Eastern Europe" />
 
+        <View
+            android:id="@+id/divider"
+            style="@style/Divider"
+            android:layout_below="@+id/subTitle"
+            android:layout_marginTop="10dp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/DetailsItemThemeLabel"
+                tools:text="Capital:" />
+
+            <TextView
+                android:id="@+id/capital"
+                style="@style/DetailsItemTheme"
+                tools:text="Bucharest" />
+
+            <TextView
+                style="@style/DetailsItemThemeLabel"
+                tools:text="Population:" />
+
+            <TextView
+                android:id="@+id/population"
+                style="@style/DetailsItemTheme"
+                tools:text="25,000,000" />
+
+            <TextView
+                style="@style/DetailsItemThemeLabel"
+                tools:text="Area:" />
+
+            <TextView
+                android:id="@+id/area"
+                style="@style/DetailsItemTheme"
+                tools:text="1000000" />
+
+            <TextView
+                style="@style/DetailsItemThemeLabel"
+                tools:text="Location:" />
+
+            <TextView
+                style="@style/DetailsItemTheme"
+                tools:text="latitude 50, longitude 50" />
+        </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

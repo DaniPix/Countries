@@ -71,7 +71,14 @@ public class CountriesFragment extends Fragment implements CountriesView {
         if (mCountries != null) {
             mCountriesList.setAdapter(new CountriesAdapter(getActivity(), mCountries, R.layout.fragment_countries_item));
             mCountriesList.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mCountriesList.addOnItemTouchListener(new CountriesClickListener(getActivity(), mCountriesList, new OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int positon) {
+
+                }
+            }));
         }
+
         return view;
     }
 }

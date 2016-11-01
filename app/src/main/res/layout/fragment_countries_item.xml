@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/countryFlag"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="10dp"
         android:contentDescription="@string/placeholders_country_flag"
         android:scaleType="centerInside"
@@ -23,7 +23,12 @@
         android:layout_toEndOf="@+id/countryFlag"
         android:fontFamily="sans-serif-light"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         tools:text="Romania, Europe" />
+
+    <View
+        style="@style/Divider"
+        android:layout_below="@id/countryFlag"
+        />
 
 </RelativeLayout>

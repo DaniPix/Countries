@@ -5,15 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/placeholders_country_flag"
         android:scaleType="centerCrop"
         tools:src="@drawable/ro" />
 
-
-
-
+    <include layout="@layout/country_details" />
 
 </LinearLayout>
