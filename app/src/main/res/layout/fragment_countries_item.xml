@@ -28,7 +28,6 @@
 
     <View
         style="@style/Divider"
-        android:layout_below="@id/countryFlag"
-        />
+        android:layout_below="@id/countryFlag" />
 
 </RelativeLayout>

@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/title"
+        style="@style/HeaderTheme"
+        tools:text="Romania" />
+
+    <TextView
+        android:id="@+id/subTitle"
+        style="@style/SubHeaderTheme"
+        android:layout_below="@id/title"
+        tools:text="Europe, Eastern Europe" />
+
+    <View
+        android:id="@+id/divider"
+        style="@style/Divider"
+        android:layout_below="@+id/subTitle"
+        android:layout_marginTop="10dp" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/HeaderTheme"
-            tools:text="Romania, Bucharest" />
-
-        <TextView
-            android:id="@+id/subTitle"
-            style="@style/SubHeaderTheme"
-            android:layout_below="@id/title"
-            tools:text="Europe, Eastern Europe" />
-
-        <View
-            android:id="@+id/divider"
-            style="@style/Divider"
-            android:layout_below="@+id/subTitle"
-            android:layout_marginTop="10dp" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/divider">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/divider"
             android:orientation="vertical">
 
             <TextView
                 style="@style/DetailsItemThemeLabel"
-                tools:text="Capital:" />
+                android:text="@string/capital" />
 
             <TextView
                 android:id="@+id/capital"
@@ -43,7 +43,7 @@
 
             <TextView
                 style="@style/DetailsItemThemeLabel"
-                tools:text="Population:" />
+                android:text="@string/population" />
 
             <TextView
                 android:id="@+id/population"
@@ -52,7 +52,7 @@
 
             <TextView
                 style="@style/DetailsItemThemeLabel"
-                tools:text="Area:" />
+                android:text="@string/area" />
 
             <TextView
                 android:id="@+id/area"
@@ -61,11 +61,12 @@
 
             <TextView
                 style="@style/DetailsItemThemeLabel"
-                tools:text="Location:" />
+                android:text="@string/location" />
 
             <TextView
+                android:id="@+id/location"
                 style="@style/DetailsItemTheme"
                 tools:text="latitude 50, longitude 50" />
         </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

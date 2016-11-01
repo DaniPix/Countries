@@ -24,7 +24,7 @@ public interface CountriesService {
     Observable<List<Country>> fetchCountries();
 
     @GET(RestConstants.FETCH_COUNTRY)
-    Observable<Country> fetchCountry(@Path("callingCodeId") String code, @QueryMap Map<String, String> queryParams);
+    Observable<List<Country>> fetchCountry(@Path("callingCodeId") String code);
 
 
     class Factory {

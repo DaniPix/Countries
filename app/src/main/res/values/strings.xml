@@ -3,9 +3,13 @@
     <string name="title_activity_countries">Countries</string>
     <string name="action_settings">Settings</string>
 
+    <string name="capital">Location</string>
+    <string name="population">Population</string>
+    <string name="area">Area</string>
+    <string name="location">Location</string>
 
     <!-- PLACEHOLDERS -->
-    <string name="placeholders_country_flag">Country Flag</string>
+    <string name="placeholders_country_flag" translatable="false">Country Flag</string>
 
 
 </resources>

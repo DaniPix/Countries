@@ -2,14 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="match_parent"
+        android:id="@+id/countryDetailsFlag"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"
         android:contentDescription="@string/placeholders_country_flag"
-        android:scaleType="centerCrop"
+        android:padding="3dp"
         tools:src="@drawable/ro" />
 
     <include layout="@layout/country_details" />

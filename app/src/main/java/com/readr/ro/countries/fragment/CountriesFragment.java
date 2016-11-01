@@ -1,6 +1,7 @@
 package com.readr.ro.countries.fragment;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.readr.ro.countries.R;
 import com.readr.ro.countries.adapter.CountriesAdapter;
+import com.readr.ro.countries.constants.Constants;
 import com.readr.ro.countries.model.Country;
 import com.readr.ro.countries.presenter.CountriesPresenter;
 import com.readr.ro.countries.view.CountriesView;
@@ -63,7 +65,7 @@ public class CountriesFragment extends Fragment implements CountriesView {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_countries, container, false);
         ButterKnife.bind(this, view);
@@ -71,13 +73,23 @@ public class CountriesFragment extends Fragment implements CountriesView {
         if (mCountries != null) {
             mCountriesList.setAdapter(new CountriesAdapter(getActivity(), mCountries, R.layout.fragment_countries_item));
             mCountriesList.setLayoutManager(new LinearLayoutManager(getActivity()));
-            mCountriesList.addOnItemTouchListener(new CountriesClickListener(getActivity(), mCountriesList, new OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int positon) {
-
-                }
-            }));
         }
+        mCountriesList.addOnItemTouchListener(new CountriesClickListener(getActivity(), mCountriesList, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                FragmentManager fm = getFragmentManager();
+                Fragment fragment = new CountryFragment();
+                Bundle bundle = new Bundle();
+                Country country = mCountries.get(position);
+
+                bundle.putString(Constants.COUNTRY_CODE_ID, country.getCallingCodes()[0]);
+                fragment.setArguments(bundle);
+                fm.beginTransaction()
+                        .replace(R.id.container, fragment, CountryFragment.class.getName())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        }));
 
         return view;
     }
