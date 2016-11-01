@@ -2,7 +2,6 @@ package com.readr.ro.countries.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.icu.text.UnicodeSetSpanner;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -70,10 +69,12 @@ public class CountriesFragment extends Fragment implements CountriesView {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_countries, container, false);
         ButterKnife.bind(this, view);
-        mCountriesPresenter.loadCountries();
+
         if (mCountries != null) {
             mCountriesList.setAdapter(new CountriesAdapter(getActivity(), mCountries, R.layout.fragment_countries_item));
             mCountriesList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        } else {
+            mCountriesPresenter.loadCountries();
         }
         mCountriesList.addOnItemTouchListener(new CountriesClickListener(getActivity(), mCountriesList, new OnItemClickListener() {
             @Override

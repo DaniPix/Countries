@@ -69,18 +69,22 @@ public class CountryFragment extends Fragment implements CountryView {
 
     @Override
     public void displayCountryDetails(Country country) {
+
         int resId = ImageUtils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), getActivity());
-        Picasso.with(getActivity())
-                .load(resId)
-                .into(flag);
+        if (resId != 0) {
+            Picasso.with(getActivity()).load(resId).into(flag);
+        }
 
         title.setText(country.getName());
+
         subTitle.setText(country.getRegion() + ", " + country.getSubRegion());
+
         capital.setText(country.getCapital());
+
         population.setText(country.getPopulation());
+
         area.setText(country.getArea());
-        location.setText("lat " + country.getLocation()[0] + ", " + "long " + country.getLocation()[1]);
 
-
+        location.setText(getActivity().getString(R.string.latitude) + country.getLocation()[0] + ", " + getActivity().getString(R.string.longitude) + country.getLocation()[1]);
     }
 }
