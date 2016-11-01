@@ -1,7 +1,6 @@
 package com.readr.ro.countries.service;
 
 import com.readr.ro.countries.constants.RestConstants;
-import com.readr.ro.countries.model.Countries;
 import com.readr.ro.countries.model.Country;
 
 import java.util.List;
@@ -29,6 +28,11 @@ public interface CountriesService {
 
 
     class Factory {
+
+        private Factory() {
+            // private constructor
+        }
+
         public static CountriesService create() {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(RestConstants.BASE_ENDPOINT)

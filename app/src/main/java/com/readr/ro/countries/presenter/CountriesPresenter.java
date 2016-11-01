@@ -82,5 +82,4 @@ public class CountriesPresenter implements Presenter<CountriesView> {
                     }
                 });
     }
-
 }
