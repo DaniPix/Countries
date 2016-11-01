@@ -3,10 +3,11 @@
     <string name="title_activity_countries">Countries</string>
     <string name="action_settings">Settings</string>
 
-    <string name="capital">Location</string>
+    <string name="capital">Capital</string>
     <string name="population">Population</string>
     <string name="area">Area</string>
     <string name="location">Location</string>
+    <string name="missing_calling_codes">Calling codes are missing, therefore we can not proceed to a detailed view for the selected country.</string>
 
     <!-- PLACEHOLDERS -->
     <string name="placeholders_country_flag" translatable="false">Country Flag</string>

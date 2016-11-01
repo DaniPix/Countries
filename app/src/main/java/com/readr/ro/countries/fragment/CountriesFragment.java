@@ -2,6 +2,7 @@ package com.readr.ro.countries.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.icu.text.UnicodeSetSpanner;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -81,7 +82,11 @@ public class CountriesFragment extends Fragment implements CountriesView {
                 Fragment fragment = new CountryFragment();
                 Bundle bundle = new Bundle();
                 Country country = mCountries.get(position);
-
+                String[] callingCodes = country.getCallingCodes();
+                if (callingCodes == null || callingCodes.length == 0) {
+                    Toast.makeText(getActivity(), R.string.missing_calling_codes, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 bundle.putString(Constants.COUNTRY_CODE_ID, country.getCallingCodes()[0]);
                 fragment.setArguments(bundle);
                 fm.beginTransaction()
