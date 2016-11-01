@@ -69,10 +69,12 @@ public class CountriesFragment extends Fragment implements CountriesView {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_countries, container, false);
         ButterKnife.bind(this, view);
-        mCountriesPresenter.loadCountries();
+
         if (mCountries != null) {
             mCountriesList.setAdapter(new CountriesAdapter(getActivity(), mCountries, R.layout.fragment_countries_item));
             mCountriesList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        } else {
+            mCountriesPresenter.loadCountries();
         }
         mCountriesList.addOnItemTouchListener(new CountriesClickListener(getActivity(), mCountriesList, new OnItemClickListener() {
             @Override
@@ -81,8 +83,9 @@ public class CountriesFragment extends Fragment implements CountriesView {
                 Fragment fragment = new CountryFragment();
                 Bundle bundle = new Bundle();
                 Country country = mCountries.get(position);
-
-                bundle.putString(Constants.COUNTRY_CODE_ID, country.getCallingCodes()[0]);
+                if (country.getCallingCodes() != null) {
+                    bundle.putString(Constants.COUNTRY_CODE_ID, country.getCallingCodes()[0]);
+                }
                 fragment.setArguments(bundle);
                 fm.beginTransaction()
                         .replace(R.id.container, fragment, CountryFragment.class.getName())

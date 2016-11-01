@@ -8,8 +8,9 @@
     <string name="area">Area</string>
     <string name="location">Location</string>
 
+    <string name="latitude">Lat. </string>
+    <string name="longitude">Long. </string>
+
     <!-- PLACEHOLDERS -->
     <string name="placeholders_country_flag" translatable="false">Country Flag</string>
-
-
 </resources>
