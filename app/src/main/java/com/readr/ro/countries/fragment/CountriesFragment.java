@@ -24,6 +24,7 @@ import com.readr.ro.countries.adapter.CountriesAdapter;
 import com.readr.ro.countries.constants.Constants;
 import com.readr.ro.countries.model.Country;
 import com.readr.ro.countries.presenter.CountriesPresenter;
+import com.readr.ro.countries.util.Utils;
 import com.readr.ro.countries.view.CountriesView;
 
 import java.util.ArrayList;
@@ -119,6 +120,12 @@ public class CountriesFragment extends Fragment implements CountriesView {
         mCountriesList.addOnItemTouchListener(new CountriesClickListener(getActivity(), mCountriesList, new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+
+                if(!Utils.isOnline(getActivity())){
+                    Toast.makeText(getActivity(), R.string.internet_connection_message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 FragmentManager fm = getFragmentManager();
                 Fragment fragment = new CountryFragment();
                 Bundle bundle = new Bundle();
@@ -158,6 +165,9 @@ public class CountriesFragment extends Fragment implements CountriesView {
             public boolean onQueryTextChange(String newText) {
                 String query = newText.toLowerCase();
                 mFilteredCountries = new ArrayList<>();
+                if (mCountries == null || mCountries.isEmpty()) {
+                    return false;
+                }
                 for (Country country : mCountries) {
                     if (country.getName().toLowerCase().contains(query)) {
                         mFilteredCountries.add(country);

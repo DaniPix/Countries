@@ -8,7 +8,7 @@
     <string name="area">Area</string>
     <string name="location">Location</string>
     <string name="missing_calling_codes">Calling codes are missing, therefore we can not proceed to a detailed view for the selected country.</string>
-
+    <string name="internet_connection_message">Something went wrong, check internet connection.</string>
     <string name="latitude">Lat. </string>
     <string name="longitude">Long. </string>
 

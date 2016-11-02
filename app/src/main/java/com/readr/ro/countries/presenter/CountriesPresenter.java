@@ -1,8 +1,8 @@
 package com.readr.ro.countries.presenter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.readr.ro.countries.R;
 import com.readr.ro.countries.model.Country;
@@ -56,7 +56,7 @@ public class CountriesPresenter implements Presenter<CountriesView> {
         }
 
 
-       mCountriesView.get().showProgressDialog();
+        mCountriesView.get().showProgressDialog();
 
         CountriesApplication app = new CountriesApplication();
         final CountriesService service = app.getService();
@@ -76,6 +76,7 @@ public class CountriesPresenter implements Presenter<CountriesView> {
                     public void onError(Throwable e) {
                         Log.e(getClass().getName(), e.getMessage(), e);
                         mCountriesView.get().dismissProgressDialog();
+                        Toast.makeText(mContext, R.string.internet_connection_message, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
