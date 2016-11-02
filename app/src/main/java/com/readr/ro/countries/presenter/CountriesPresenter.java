@@ -10,6 +10,7 @@ import com.readr.ro.countries.service.CountriesApplication;
 import com.readr.ro.countries.service.CountriesService;
 import com.readr.ro.countries.view.CountriesView;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import rx.Observable;
@@ -27,7 +28,7 @@ public class CountriesPresenter implements Presenter<CountriesView> {
 
     private Context mContext;
     private ProgressDialog mProgressDialog;
-    private CountriesView mCountriesView;
+    private WeakReference<CountriesView> mCountriesView;
     private Subscription mSubscription;
     private List<Country> mCountries;
 
@@ -39,7 +40,7 @@ public class CountriesPresenter implements Presenter<CountriesView> {
 
     @Override
     public void attachView(CountriesView view) {
-        this.mCountriesView = view;
+        this.mCountriesView = new WeakReference<>(view);
     }
 
     @Override
@@ -69,7 +70,7 @@ public class CountriesPresenter implements Presenter<CountriesView> {
                 .subscribe(new Observer<List<Country>>() {
                     @Override
                     public void onCompleted() {
-                        mCountriesView.displayCountries(mCountries);
+                        mCountriesView.get().displayCountries(mCountries);
                         mProgressDialog.dismiss();
                     }
 

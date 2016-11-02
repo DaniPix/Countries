@@ -14,4 +14,5 @@
 
     <!-- PLACEHOLDERS -->
     <string name="placeholders_country_flag" translatable="false">Country Flag</string>
+    <string name="search">Search for a country</string>
 </resources>

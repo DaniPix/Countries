@@ -33,16 +33,8 @@ public class Country {
         return countryCode;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
     public String[] getCallingCodes() {
         return callingCodes;
-    }
-
-    public void setCallingCodes(String[] callingCodes) {
-        this.callingCodes = callingCodes;
     }
 
     public String getName() {
@@ -57,55 +49,27 @@ public class Country {
         return capital;
     }
 
-    public void setCapital(String capital) {
-        this.capital = capital;
-    }
-
     public String getRegion() {
         return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
     }
 
     public String getSubRegion() {
         return subRegion;
     }
 
-    public void setSubRegion(String subRegion) {
-        this.subRegion = subRegion;
-    }
-
     public String[] getLocation() {
         return location;
-    }
-
-    public void setLocation(String[] location) {
-        this.location = location;
     }
 
     public String getPopulation() {
         return population;
     }
 
-    public void setPopulation(String population) {
-        this.population = population;
-    }
-
     public String getArea() {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
-
     public String getAlternativeCountryCode() {
         return alternativeCountryCode;
-    }
-
-    public void setAlternativeCountryCode(String alternativeCountryCode) {
-        this.alternativeCountryCode = alternativeCountryCode;
     }
 }

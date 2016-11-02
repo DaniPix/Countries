@@ -3,10 +3,13 @@ package com.readr.ro.countries.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +27,8 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Intent.ACTION_VIEW;
 
 /**
  * Created by Domnica on 11/1/2016.
@@ -88,7 +93,7 @@ public class CountryFragment extends Fragment implements CountryView {
     }
 
     @Override
-    public void displayCountryDetails(Country country) {
+    public void displayCountryDetails(final Country country) {
         title.setText(country.getName());
 
         int resId = Utils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), getActivity());
@@ -101,7 +106,17 @@ public class CountryFragment extends Fragment implements CountryView {
         capital.setText(country.getCapital());
         population.setText(country.getPopulation());
         area.setText(country.getArea());
-        location.setText(getActivity().getString(R.string.latitude) + country.getLocation()[0] + ", " + getActivity().getString(R.string.longitude) + country.getLocation()[1]);
+
+
+        location.setText(Html.fromHtml("<u>" + getActivity().getString(R.string.latitude) + country.getLocation()[0] + ", " + getActivity().getString(R.string.longitude) + country.getLocation()[1] + "</u>"));
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ACTION_VIEW, Uri.parse("http://maps.google.com/maps?q=" + country.getLocation()[0] + "," + country.getLocation()[1]));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

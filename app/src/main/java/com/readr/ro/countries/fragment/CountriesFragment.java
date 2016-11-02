@@ -4,11 +4,16 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -20,6 +25,7 @@ import com.readr.ro.countries.model.Country;
 import com.readr.ro.countries.presenter.CountriesPresenter;
 import com.readr.ro.countries.view.CountriesView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +43,8 @@ public class CountriesFragment extends Fragment implements CountriesView {
 
     private CountriesPresenter mCountriesPresenter;
     private List<Country> mCountries;
+    private List<Country> mFilteredCountries;
+    private CountriesAdapter mAdapter;
 
     public CountriesFragment() {
         // default constructor
@@ -71,7 +79,9 @@ public class CountriesFragment extends Fragment implements CountriesView {
     public void displayCountries(List<Country> countries) {
         if (countries != null && !countries.isEmpty()) {
             mCountries = countries;
-            mCountriesList.setAdapter(new CountriesAdapter(getActivity(), countries, R.layout.fragment_countries_item));
+            mFilteredCountries = countries;
+            mAdapter = new CountriesAdapter(getActivity(), countries, R.layout.fragment_countries_item);
+            mCountriesList.setAdapter(mAdapter);
             mCountriesList.setLayoutManager(new LinearLayoutManager(getActivity()));
         } else {
             Toast.makeText(getActivity(), "Something went wrong.", Toast.LENGTH_SHORT).show();
@@ -84,8 +94,9 @@ public class CountriesFragment extends Fragment implements CountriesView {
         View view = inflater.inflate(R.layout.fragment_countries, container, false);
         ButterKnife.bind(this, view);
 
-        if (mCountries != null) {
-            mCountriesList.setAdapter(new CountriesAdapter(getActivity(), mCountries, R.layout.fragment_countries_item));
+        if (mFilteredCountries != null) {
+            mAdapter = new CountriesAdapter(getActivity(), mFilteredCountries, R.layout.fragment_countries_item);
+            mCountriesList.setAdapter(mAdapter);
             mCountriesList.setLayoutManager(new LinearLayoutManager(getActivity()));
         } else {
             mCountriesPresenter.loadCountries();
@@ -98,7 +109,7 @@ public class CountriesFragment extends Fragment implements CountriesView {
                 FragmentManager fm = getFragmentManager();
                 Fragment fragment = new CountryFragment();
                 Bundle bundle = new Bundle();
-                Country country = mCountries.get(position);
+                Country country = mFilteredCountries.get(position);
                 if (!isCallingCodeCorrect(country.getCallingCodes())) {
                     Toast.makeText(getActivity(), R.string.missing_calling_codes, Toast.LENGTH_SHORT).show();
                     return;
@@ -117,6 +128,33 @@ public class CountriesFragment extends Fragment implements CountriesView {
         return view;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_countries, menu);
+        MenuItem item = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                String query = newText.toLowerCase();
+                mFilteredCountries = new ArrayList<>();
+                for (Country country : mCountries) {
+                    if (country.getName().toLowerCase().contains(query)) {
+                        mFilteredCountries.add(country);
+                    }
+                }
+                mAdapter = new CountriesAdapter(getActivity(), mFilteredCountries, R.layout.fragment_countries_item);
+                mCountriesList.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+    }
 }

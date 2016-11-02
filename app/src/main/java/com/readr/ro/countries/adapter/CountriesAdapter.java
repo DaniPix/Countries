@@ -65,11 +65,8 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         int resId = Utils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), mContext);
         if (resId != 0) {
-
-            mImageLoader.
-                    load(resId).
-                     into(holder.flag);
-         } else {
+            mImageLoader.load(resId).into(holder.flag);
+        } else {
             mImageLoader.load(R.drawable.flag_placeholder).into(holder.flag);
         }
 
