@@ -15,9 +15,4 @@ public class CountriesPresenterTest extends TestCase {
         CountriesPresenter countriesPresenter = new CountriesPresenter(null);
         countriesPresenter.loadCountries();
     }
-
-    public void testLoadCountry() throws Exception {
-        CountryPresenter countryPresenter = new CountryPresenter(null);
-        countryPresenter.fetchCountryDetails(null);
-    }
 }
