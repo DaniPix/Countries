@@ -8,6 +8,8 @@ import android.view.View;
 
 /**
  * Created by Domnica on 11/1/2016.
+ * ClickListener for RecyclerView
+ * As there's no direct support like buttons, OnItemTouchListener interface needs to be used instead when using RecyclerView library
  */
 
 public class CountriesClickListener implements RecyclerView.OnItemTouchListener {

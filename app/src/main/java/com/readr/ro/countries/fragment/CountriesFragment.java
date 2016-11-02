@@ -26,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment containing a simple view for displaying all the countries fetched from the rest call
  */
 public class CountriesFragment extends Fragment implements CountriesView {
 

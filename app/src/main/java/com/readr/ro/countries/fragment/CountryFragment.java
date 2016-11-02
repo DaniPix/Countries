@@ -1,5 +1,7 @@
 package com.readr.ro.countries.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +27,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Domnica on 11/1/2016.
+ * Fragment displaying a simple list of details for the selected country
  */
 
 public class CountryFragment extends Fragment implements CountryView {
@@ -32,7 +35,7 @@ public class CountryFragment extends Fragment implements CountryView {
     private CountryPresenter mCountryPresenter;
     private Country mCountry;
     private String countryCodeId;
-
+    private String countryName;
 
     @BindView(R.id.countryDetailsFlag)
     ImageView flag;
@@ -56,17 +59,11 @@ public class CountryFragment extends Fragment implements CountryView {
         mCountryPresenter = new CountryPresenter(getActivity());
         mCountryPresenter.attachView(this);
         Bundle bundle = getArguments();
-        String countryName = getString(R.string.title_activity_countries);
+        countryName = getString(R.string.title_activity_countries);
         if (bundle != null) {
             countryCodeId = bundle.getString(Constants.COUNTRY_CODE_ID);
             // we are sending the country name for a smother transition (if it's available)
             countryName = bundle.getString(Constants.COUNTRY_NAME);
-        }
-
-        ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (mActionBar != null) {
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-            mActionBar.setTitle(countryName);
         }
     }
 
@@ -83,15 +80,18 @@ public class CountryFragment extends Fragment implements CountryView {
         ButterKnife.bind(this, view);
         mCountryPresenter.fetchCountryDetails(countryCodeId);
         setHasOptionsMenu(true);
+        ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBar.setTitle(countryName);
+        }
         return view;
     }
 
     @Override
     public void displayCountryDetails(Country country) {
         mCountry = country;
-
         title.setText(country.getName());
-
 
         int resId = ImageUtils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), getActivity());
         if (resId != 0) {
@@ -99,15 +99,10 @@ public class CountryFragment extends Fragment implements CountryView {
         } else {
             Picasso.with(getActivity()).load(R.drawable.flag_placeholder).into(flag);
         }
-
         subTitle.setText(country.getRegion() + ", " + country.getSubRegion());
-
         capital.setText(country.getCapital());
-
         population.setText(country.getPopulation());
-
         area.setText(country.getArea());
-
         location.setText(getActivity().getString(R.string.latitude) + country.getLocation()[0] + ", " + getActivity().getString(R.string.longitude) + country.getLocation()[1]);
     }
 
@@ -115,8 +110,19 @@ public class CountryFragment extends Fragment implements CountryView {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             super.getActivity().onBackPressed();
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //Bug known from the support library (workaround if you turn the screen while having animations)
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimatorInflater.loadAnimator(getActivity(), R.animator.slide_in_right);
+        } else {
+            return AnimatorInflater.loadAnimator(getActivity(), R.animator.slide_out_left);
+        }
     }
 }

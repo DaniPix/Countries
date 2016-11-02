@@ -14,6 +14,7 @@ import rx.Observable;
 
 /**
  * Created by Domnica on 11/1/2016.
+ * Retrofit service used to build the restful api calls
  */
 
 public interface CountriesService {

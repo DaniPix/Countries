@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import com.readr.ro.countries.fragment.CountriesFragment;
 
 /**
- * Launcher activity of the application.
+ * Launcher activity and main activity of the application.
  * Contains a fragment that's displaying the countries.
  */
 public class CountriesActivity extends AppCompatActivity {

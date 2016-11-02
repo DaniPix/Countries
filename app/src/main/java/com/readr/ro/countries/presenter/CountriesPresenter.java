@@ -20,6 +20,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by Domnica on 11/1/2016.
+ * CountriesPresenter is used to fetch data from rest (the list of countries) which is communicating with the fragment (controller) to display them
  */
 
 public class CountriesPresenter implements Presenter<CountriesView> {

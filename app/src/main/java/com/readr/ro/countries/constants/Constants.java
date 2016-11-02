@@ -5,7 +5,7 @@ package com.readr.ro.countries.constants;
  */
 
 public class Constants {
-
+    // Bundle constants
     public static final String COUNTRY_CODE_ID = "countryCodeId";
     public static final String COUNTRY_NAME = "countryName";
 
