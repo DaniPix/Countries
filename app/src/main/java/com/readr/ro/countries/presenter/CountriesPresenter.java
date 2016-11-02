@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
+import com.readr.ro.countries.R;
 import com.readr.ro.countries.model.Country;
 import com.readr.ro.countries.service.CountriesApplication;
 import com.readr.ro.countries.service.CountriesService;
@@ -54,7 +55,7 @@ public class CountriesPresenter implements Presenter<CountriesView> {
         }
 
 
-        mProgressDialog = new ProgressDialog(mContext, ProgressDialog.STYLE_SPINNER);
+        mProgressDialog = new ProgressDialog(mContext, R.style.ProgressDialogTheme);
         mProgressDialog.show();
 
         CountriesApplication app = new CountriesApplication();

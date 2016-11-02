@@ -24,6 +24,8 @@
         android:fontFamily="sans-serif-light"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        android:ellipsize="end"
+        android:maxLines="1"
         tools:text="Romania, Europe" />
 
     <View

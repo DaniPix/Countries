@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.readr.ro.countries.R;
 import com.readr.ro.countries.model.Country;
 import com.readr.ro.countries.util.ImageUtils;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -28,12 +30,14 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<Country> mCountries;
     private int mLayout;
     private LayoutInflater mInflater;
+    private Picasso mImageLoader;
 
     public CountriesAdapter(Context context, List<Country> countries, int layout) {
         this.mInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mCountries = countries;
         this.mLayout = layout;
+        this.mImageLoader = Picasso.with(context);
     }
 
     @Override
@@ -63,10 +67,14 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         int resId = ImageUtils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), mContext);
         if (resId != 0) {
-            Picasso.with(mContext)
-                    .load(resId)
-                    .into(holder.flag);
+
+            mImageLoader.
+                    load(resId).
+                     into(holder.flag);
+         } else {
+            mImageLoader.load(R.drawable.flag_placeholder).into(holder.flag);
         }
+
         String detailsText = country.getName() + ", " + country.getRegion();
         holder.details.setText(detailsText);
     }

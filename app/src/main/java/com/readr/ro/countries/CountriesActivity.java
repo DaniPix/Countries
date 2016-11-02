@@ -5,10 +5,14 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.readr.ro.countries.fragment.CountriesFragment;
 
-
+/**
+ * Launcher activity of the application.
+ * Contains a fragment that's displaying the countries.
+ */
 public class CountriesActivity extends AppCompatActivity {
 
     @Override
@@ -27,5 +31,10 @@ public class CountriesActivity extends AppCompatActivity {
                         .commit();
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
     }
 }

@@ -31,7 +31,7 @@ public class ImageUtils {
             // therefore had to rename the countries code using the second denominator dom.png,
             // and if the first search fails, definitely the second denominator should be there.
             // Instead of this check, which probably adds some insignificant time to the whole process,
-            // I could've had a check in the adapter and just use hardcoded dom.png denominator,
+            // I could've had a check slide_in_left the adapter and just use hardcoded dom.png denominator,
             // but I prefer this way better
             resourceId = context.getResources().getIdentifier(alternativeAlphaCode.toLowerCase(), "drawable", context.getPackageName());
             return resourceId;

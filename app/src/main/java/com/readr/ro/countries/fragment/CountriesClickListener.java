@@ -25,11 +25,6 @@ public class CountriesClickListener implements RecyclerView.OnItemTouchListener 
             public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
-
-            @Override
-            public void onLongPress(MotionEvent e) {
-                super.onLongPress(e);
-            }
         });
     }
 
@@ -45,12 +40,12 @@ public class CountriesClickListener implements RecyclerView.OnItemTouchListener 
 
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        // not needed in the current context
+        // not needed slide_in_left the current context
     }
 
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        // not needed in the current context
+        // not needed slide_in_left the current context
     }
 
 

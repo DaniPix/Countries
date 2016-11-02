@@ -3,7 +3,10 @@ package com.readr.ro.countries.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,6 +33,7 @@ public class CountryFragment extends Fragment implements CountryView {
     private Country mCountry;
     private String countryCodeId;
 
+
     @BindView(R.id.countryDetailsFlag)
     ImageView flag;
     @BindView(R.id.title)
@@ -52,9 +56,24 @@ public class CountryFragment extends Fragment implements CountryView {
         mCountryPresenter = new CountryPresenter(getActivity());
         mCountryPresenter.attachView(this);
         Bundle bundle = getArguments();
+        String countryName = getString(R.string.title_activity_countries);
         if (bundle != null) {
             countryCodeId = bundle.getString(Constants.COUNTRY_CODE_ID);
+            // we are sending the country name for a smother transition (if it's available)
+            countryName = bundle.getString(Constants.COUNTRY_NAME);
         }
+
+        ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBar.setTitle(countryName);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mCountryPresenter.detachView();
     }
 
     @Nullable
@@ -63,18 +82,23 @@ public class CountryFragment extends Fragment implements CountryView {
         View view = inflater.inflate(R.layout.fragment_country_details, container, false);
         ButterKnife.bind(this, view);
         mCountryPresenter.fetchCountryDetails(countryCodeId);
+        setHasOptionsMenu(true);
         return view;
     }
 
     @Override
     public void displayCountryDetails(Country country) {
+        mCountry = country;
+
+        title.setText(country.getName());
+
 
         int resId = ImageUtils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), getActivity());
         if (resId != 0) {
             Picasso.with(getActivity()).load(resId).into(flag);
+        } else {
+            Picasso.with(getActivity()).load(R.drawable.flag_placeholder).into(flag);
         }
-
-        title.setText(country.getName());
 
         subTitle.setText(country.getRegion() + ", " + country.getSubRegion());
 
@@ -85,5 +109,14 @@ public class CountryFragment extends Fragment implements CountryView {
         area.setText(country.getArea());
 
         location.setText(getActivity().getString(R.string.latitude) + country.getLocation()[0] + ", " + getActivity().getString(R.string.longitude) + country.getLocation()[1]);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.getActivity().onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

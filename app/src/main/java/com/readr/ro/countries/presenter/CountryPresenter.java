@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
+import com.readr.ro.countries.R;
 import com.readr.ro.countries.model.Country;
 import com.readr.ro.countries.service.CountriesApplication;
 import com.readr.ro.countries.service.CountriesService;
@@ -50,10 +51,11 @@ public class CountryPresenter implements Presenter<CountryView> {
         if (mSubscription != null) {
             mSubscription.unsubscribe();
         }
+
         CountriesApplication app = new CountriesApplication();
         final CountriesService service = app.getService();
 
-        mProgressDialog = new ProgressDialog(mContext, ProgressDialog.STYLE_SPINNER);
+        mProgressDialog = new ProgressDialog(mContext, R.style.ProgressDialogTheme);
         mProgressDialog.show();
 
         Observable<List<Country>> countryObservable = service.fetchCountry(countryCodeId);
@@ -69,6 +71,7 @@ public class CountryPresenter implements Presenter<CountryView> {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(getClass().getName(), e.getMessage(), e);
+                        mProgressDialog.dismiss();
                     }
 
                     @Override
