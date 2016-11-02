@@ -29,7 +29,6 @@ public class CountryPresenter implements Presenter<CountryView> {
     private Context mContext;
     private Subscription mSubscription;
     private Country mCountry;
-    private ProgressDialog mProgressDialog;
 
     public CountryPresenter(Context context) {
         mContext = context;
@@ -53,11 +52,11 @@ public class CountryPresenter implements Presenter<CountryView> {
             mSubscription.unsubscribe();
         }
 
+        mCountryView.get().showProgressDialog();
+
         CountriesApplication app = new CountriesApplication();
         final CountriesService service = app.getService();
 
-        mProgressDialog = new ProgressDialog(mContext, R.style.ProgressDialogTheme);
-        mProgressDialog.show();
 
         Observable<List<Country>> countryObservable = service.fetchCountry(countryCodeId);
         mSubscription = countryObservable.observeOn(AndroidSchedulers.mainThread())
@@ -66,13 +65,13 @@ public class CountryPresenter implements Presenter<CountryView> {
                     @Override
                     public void onCompleted() {
                         mCountryView.get().displayCountryDetails(mCountry);
-                        mProgressDialog.dismiss();
+                        mCountryView.get().dismissProgressDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e(getClass().getName(), e.getMessage(), e);
-                        mProgressDialog.dismiss();
+                        mCountryView.get().dismissProgressDialog();
                     }
 
                     @Override

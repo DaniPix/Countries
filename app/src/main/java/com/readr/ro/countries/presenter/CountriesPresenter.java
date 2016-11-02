@@ -27,7 +27,6 @@ import rx.schedulers.Schedulers;
 public class CountriesPresenter implements Presenter<CountriesView> {
 
     private Context mContext;
-    private ProgressDialog mProgressDialog;
     private WeakReference<CountriesView> mCountriesView;
     private Subscription mSubscription;
     private List<Country> mCountries;
@@ -57,8 +56,7 @@ public class CountriesPresenter implements Presenter<CountriesView> {
         }
 
 
-        mProgressDialog = new ProgressDialog(mContext, R.style.ProgressDialogTheme);
-        mProgressDialog.show();
+       mCountriesView.get().showProgressDialog();
 
         CountriesApplication app = new CountriesApplication();
         final CountriesService service = app.getService();
@@ -71,12 +69,13 @@ public class CountriesPresenter implements Presenter<CountriesView> {
                     @Override
                     public void onCompleted() {
                         mCountriesView.get().displayCountries(mCountries);
-                        mProgressDialog.dismiss();
+                        mCountriesView.get().dismissProgressDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e(getClass().getName(), e.getMessage(), e);
+                        mCountriesView.get().dismissProgressDialog();
                     }
 
                     @Override

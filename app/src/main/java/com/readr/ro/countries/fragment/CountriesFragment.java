@@ -2,6 +2,7 @@ package com.readr.ro.countries.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -45,6 +46,7 @@ public class CountriesFragment extends Fragment implements CountriesView {
     private List<Country> mCountries;
     private List<Country> mFilteredCountries;
     private CountriesAdapter mAdapter;
+    ProgressDialog mProgressDialog;
 
     public CountriesFragment() {
         // default constructor
@@ -67,6 +69,17 @@ public class CountriesFragment extends Fragment implements CountriesView {
             mActionBar.setTitle(R.string.title_activity_countries);
             mActionBar.setDisplayHomeAsUpEnabled(false);
         }
+    }
+
+    @Override
+    public void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(getActivity(), R.style.ProgressDialogTheme);
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        mProgressDialog.dismiss();
     }
 
     @Override

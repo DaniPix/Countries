@@ -3,6 +3,7 @@ package com.readr.ro.countries.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class CountryFragment extends Fragment implements CountryView {
     private CountryPresenter mCountryPresenter;
     private String countryCodeId;
     private String countryName;
+    private ProgressDialog mProgressDialog;
 
     @BindView(R.id.countryDetailsFlag)
     ImageView flag;
@@ -117,6 +119,17 @@ public class CountryFragment extends Fragment implements CountryView {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(getActivity(), R.style.ProgressDialogTheme);
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        mProgressDialog.dismiss();
     }
 
     @Override

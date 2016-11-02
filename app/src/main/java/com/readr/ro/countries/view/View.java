@@ -8,4 +8,8 @@ import android.content.Context;
 
 public interface View {
     Context getContext();
+
+    void showProgressDialog();
+
+    void dismissProgressDialog();
 }
