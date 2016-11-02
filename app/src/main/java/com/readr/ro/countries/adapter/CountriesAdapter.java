@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.readr.ro.countries.R;
 import com.readr.ro.countries.model.Country;
-import com.readr.ro.countries.util.ImageUtils;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
+import com.readr.ro.countries.util.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -65,7 +63,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void setUpItemRow(CountryHolder holder, Country country) {
 
-        int resId = ImageUtils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), mContext);
+        int resId = Utils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), mContext);
         if (resId != 0) {
 
             mImageLoader.
@@ -92,5 +90,4 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ButterKnife.bind(this, itemView);
         }
     }
-
 }

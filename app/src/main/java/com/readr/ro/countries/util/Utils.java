@@ -6,9 +6,9 @@ import android.content.Context;
  * Created by Domnica on 11/1/2016.
  */
 
-public class ImageUtils {
+public class Utils {
 
-    private ImageUtils() {
+    private Utils() {
         // private default constructor
     }
 
@@ -36,5 +36,21 @@ public class ImageUtils {
             resourceId = context.getResources().getIdentifier(alternativeAlphaCode.toLowerCase(), "drawable", context.getPackageName());
             return resourceId;
         }
+    }
+
+    public static boolean isCallingCodeCorrect(String[] callingCodes) {
+        boolean result = false;
+
+        if (callingCodes != null) {
+            for (String callingCode : callingCodes) {
+                // if at least one calling code is eligible proceed
+                if (!callingCode.isEmpty()) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+
+        return result;
     }
 }

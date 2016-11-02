@@ -25,6 +25,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.readr.ro.countries.util.Utils.isCallingCodeCorrect;
+
 /**
  * Fragment containing a simple view for displaying all the countries fetched from the rest call
  */
@@ -116,19 +118,5 @@ public class CountriesFragment extends Fragment implements CountriesView {
     }
 
 
-    private boolean isCallingCodeCorrect(String[] callingCodes) {
-        boolean result = false;
 
-        if (callingCodes != null) {
-            for (String callingCode : callingCodes) {
-                // if at least one calling code is eligible proceed
-                if (!callingCode.isEmpty()) {
-                    result = true;
-                    break;
-                }
-            }
-        }
-
-        return result;
-    }
 }

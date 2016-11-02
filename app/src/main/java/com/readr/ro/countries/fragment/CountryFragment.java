@@ -18,7 +18,7 @@ import com.readr.ro.countries.R;
 import com.readr.ro.countries.constants.Constants;
 import com.readr.ro.countries.model.Country;
 import com.readr.ro.countries.presenter.CountryPresenter;
-import com.readr.ro.countries.util.ImageUtils;
+import com.readr.ro.countries.util.Utils;
 import com.readr.ro.countries.view.CountryView;
 import com.squareup.picasso.Picasso;
 
@@ -33,7 +33,6 @@ import butterknife.ButterKnife;
 public class CountryFragment extends Fragment implements CountryView {
 
     private CountryPresenter mCountryPresenter;
-    private Country mCountry;
     private String countryCodeId;
     private String countryName;
 
@@ -90,10 +89,9 @@ public class CountryFragment extends Fragment implements CountryView {
 
     @Override
     public void displayCountryDetails(Country country) {
-        mCountry = country;
         title.setText(country.getName());
 
-        int resId = ImageUtils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), getActivity());
+        int resId = Utils.fetchFlagFromAlphaCode(country.getCountryCode(), country.getAlternativeCountryCode(), getActivity());
         if (resId != 0) {
             Picasso.with(getActivity()).load(resId).into(flag);
         } else {

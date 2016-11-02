@@ -9,4 +9,7 @@ public class Constants {
     public static final String COUNTRY_CODE_ID = "countryCodeId";
     public static final String COUNTRY_NAME = "countryName";
 
+    private Constants() {
+        // private constructor
+    }
 }
