@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TintableImageView">
+        <attr name="tint" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressBar">
+        <attr name="size" format="integer" />
+        <attr name="circle_size" format="integer" />
+        <attr name="text_size" format="integer" />
+        <attr name="sign_size" format="integer" />
+
+        <attr name="circle_thickness" format="integer" />
+        <attr name="overall_thickness" format="integer" />
+        <attr name="rectangle_outline_thickness" format="integer" />
+        <attr name="text_thickness" format="integer" />
+
+        <attr name="fill_color" format="color" />
+        <attr name="empty_color" format="color" />
+        <attr name="text_color" format="color" />
+
+        <attr name="fill_alpha" format="integer" />
+        <attr name="empty_alpha" format="integer" />
+        <attr name="text_alpha" format="integer" />
+
+    </declare-styleable>
+
+    <declare-styleable name="CirclePageIndicator">
+        <attr name="fillColor" format="color" />
+        <attr name="pageColor" format="color" />
+        <attr name="radius" format="dimension" />
+        <attr name="snap" format="boolean" />
+        <attr name="strokeColor" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="AnimateHorizontalProgressBar">
+        <attr name="ahp_progressColor" format="color|reference" />
+        <attr name="ahp_backgroundColor" format="color|reference" />
+        <attr name="ahp_cornerRadius" format="dimension|reference" />
+    </declare-styleable>
+</resources>

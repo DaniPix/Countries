@@ -21,15 +21,31 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/countryFlag"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-light"
+        android:maxLines="1"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:ellipsize="end"
-        android:maxLines="1"
         tools:text="Romania, Europe" />
 
     <View
         style="@style/Divider"
         android:layout_below="@id/countryFlag" />
 
+    <ImageView
+        android:id="@+id/download"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_download"
+        android:visibility="visible" />
+
+    <com.readr.ro.countries.ui.CircularProgress
+        android:id="@+id/circularProgress"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:visibility="gone"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

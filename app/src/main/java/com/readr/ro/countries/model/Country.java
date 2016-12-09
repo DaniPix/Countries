@@ -2,6 +2,7 @@ package com.readr.ro.countries.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
 /**
  * Created by Domnica on 11/1/2016.
  */
@@ -28,6 +29,9 @@ public class Country {
     private String[] location;
     @SerializedName("area")
     private String area;
+
+    private boolean downloading;
+    private boolean downloaded;
 
     public String getCountryCode() {
         return countryCode;
@@ -71,5 +75,21 @@ public class Country {
 
     public String getAlternativeCountryCode() {
         return alternativeCountryCode;
+    }
+
+    public boolean isDownloaded() {
+        return downloaded;
+    }
+
+    public void setDownloaded(boolean downloaded) {
+        this.downloaded = downloaded;
+    }
+
+    public boolean isDownloading() {
+        return downloading;
+    }
+
+    public void setDownloading(boolean downloading) {
+        this.downloading = downloading;
     }
 }

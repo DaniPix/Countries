@@ -3,14 +3,20 @@ package com.readr.ro.countries.fragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,9 +27,15 @@ import android.widget.Toast;
 
 import com.readr.ro.countries.R;
 import com.readr.ro.countries.adapter.CountriesAdapter;
+import com.readr.ro.countries.adapter.CountryHolder;
 import com.readr.ro.countries.constants.Constants;
 import com.readr.ro.countries.model.Country;
 import com.readr.ro.countries.presenter.CountriesPresenter;
+import com.readr.ro.countries.service.DownloadManager;
+import com.readr.ro.countries.service.DownloadManagerListener;
+import com.readr.ro.countries.service.DownloadProgress;
+import com.readr.ro.countries.service.DownloadObserver;
+
 import com.readr.ro.countries.util.Utils;
 import com.readr.ro.countries.view.CountriesView;
 
@@ -38,7 +50,9 @@ import static com.readr.ro.countries.util.Utils.isCallingCodeCorrect;
 /**
  * Fragment containing a simple view for displaying all the countries fetched from the rest call
  */
-public class CountriesFragment extends Fragment implements CountriesView {
+public class CountriesFragment extends Fragment implements CountriesView, DownloadManagerListener {
+
+    public static final String MESSAGE_PROGRESS = "message_progress";
 
     @BindView(R.id.countriesList)
     RecyclerView mCountriesList;
@@ -48,6 +62,9 @@ public class CountriesFragment extends Fragment implements CountriesView {
     private List<Country> mFilteredCountries;
     private CountriesAdapter mAdapter;
     ProgressDialog mProgressDialog;
+    DownloadObserver.DownloadProgressListener listener;
+    private DownloadManager downloadManager;
+
 
     public CountriesFragment() {
         // default constructor
@@ -59,6 +76,8 @@ public class CountriesFragment extends Fragment implements CountriesView {
         mCountriesPresenter = new CountriesPresenter(getActivity());
         mCountriesPresenter.attachView(this);
         setRetainInstance(true);
+        downloadManager = DownloadManager.getInstanceWithContext(getActivity());
+        downloadManager.addListener(this);
     }
 
     @Override
@@ -121,27 +140,49 @@ public class CountriesFragment extends Fragment implements CountriesView {
             @Override
             public void onItemClick(View view, int position) {
 
-                if(!Utils.isOnline(getActivity())){
+                if (!Utils.isOnline(getActivity())) {
                     Toast.makeText(getActivity(), R.string.internet_connection_message, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                FragmentManager fm = getFragmentManager();
-                Fragment fragment = new CountryFragment();
-                Bundle bundle = new Bundle();
                 Country country = mFilteredCountries.get(position);
-                if (!isCallingCodeCorrect(country.getCallingCodes())) {
-                    Toast.makeText(getActivity(), R.string.missing_calling_codes, Toast.LENGTH_SHORT).show();
-                    return;
+
+                if (country.isDownloaded() || true) {
+                    String source = "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4";
+                    String destination = getActivity().getExternalFilesDir(null).getPath() + "/file.mp4";
+
+                    DownloadProgress progress = downloadManager.progressForMedia(country.getCountryCode());
+                    if (progress != null) {
+                        progress.setCancel(true);
+                    } else {
+                        DownloadProgress progress1 = downloadManager.startDownload(country.getCountryCode(), source, destination);
+//
+                        CountryHolder holder = (CountryHolder) mCountriesList.findViewHolderForAdapterPosition(position);
+                        holder.download.setVisibility(View.GONE);
+                        holder.progress.setVisibility(View.VISIBLE);
+
+                        progress1.addListener(holder.progress);
+                    }
+
+                } else if (country.isDownloading()) {
+                    // stop download
+                } else {
+                    FragmentManager fm = getFragmentManager();
+                    Fragment fragment = new CountryFragment();
+                    Bundle bundle = new Bundle();
+                    if (!isCallingCodeCorrect(country.getCallingCodes())) {
+                        Toast.makeText(getActivity(), R.string.missing_calling_codes, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    bundle.putString(Constants.COUNTRY_CODE_ID, country.getCallingCodes()[0]);
+                    bundle.putString(Constants.COUNTRY_NAME, country.getName());
+                    fragment.setArguments(bundle);
+                    fm.beginTransaction()
+                            .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
+                            .replace(R.id.container, fragment, CountryFragment.class.getName())
+                            .addToBackStack(null)
+                            .commit();
                 }
-                bundle.putString(Constants.COUNTRY_CODE_ID, country.getCallingCodes()[0]);
-                bundle.putString(Constants.COUNTRY_NAME, country.getName());
-                fragment.setArguments(bundle);
-                fm.beginTransaction()
-                        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
-                        .replace(R.id.container, fragment, CountryFragment.class.getName())
-                        .addToBackStack(null)
-                        .commit();
             }
         }));
 
@@ -179,5 +220,13 @@ public class CountriesFragment extends Fragment implements CountriesView {
                 return true;
             }
         });
+    }
+
+
+    @Override
+    public void onMediaComplete(Object mid, CompletionStatus status) {
+        if (status == CompletionStatus.CANCELED) {
+            ///
+        }
     }
 }
